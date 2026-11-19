@@ -1,6 +1,6 @@
 # SQL Payments Analytics
 
-Practice project: analyzing payment data with SQL. The goal is to learn how to measure payment performance (approval rate, decline reasons, revenue loss) and to write clean, readable queries.
+Practice project: analyzing payment data with SQL. The goal is to learn how to measure payment performance (approval rate, decline reasons, declined payment volume) and to write clean, readable queries.
 
 ## Dataset
 
@@ -10,7 +10,7 @@ Synthetic data, created for learning. No real payment data is used.
 
 | Column | Description |
 |---|---|
-| id | Payment ID |
+| id | Payment attempt ID |
 | merchant | Merchant name |
 | country | Customer country (UA, PL, DE) |
 | card_scheme | visa / mastercard / amex |
@@ -27,47 +27,48 @@ Synthetic data, created for learning. No real payment data is used.
 | industry | Merchant industry |
 | signed_at | Contract date |
 
-To create the tables and data, run `data/payments.sql` in any SQLite client (for example, sqliteonline.com).
+To create the tables and sample data, run `payments.sql` in any SQLite client (for example, sqliteonline.com).
 
 ## Structure
 
-```
-data/payments.sql          # tables and sample data
-queries/
-  01_filtering.sql         # WHERE, AND/OR, IN, BETWEEN
-  02_aggregations.sql      # COUNT, SUM, AVG, GROUP BY, HAVING
-  03_approval_rate.sql     # payment metrics
-  04_joins.sql             # INNER JOIN, LEFT JOIN
-notes/sql_cheatsheet.md    # my notes and common mistakes
+```text
+sql-payments-analytics/
+├── payments.sql
+├── 01_filtering.sql
+├── 02_aggregations.sql
+├── 03_approval_rate.sql
+├── 04_joins.sql
+├── sql_cheatsheet.md
+└── README.md
 ```
 
-## Example: approval rate by country
+## Example: Approval Rate by Country
 
 ```sql
-SELECT country,
-       AVG(CASE WHEN status = 'approved' THEN 1.0 ELSE 0 END) AS approval_rate
+SELECT
+    country,
+    AVG(CASE WHEN status = 'approved' THEN 1.0 ELSE 0 END) AS approval_rate
 FROM payments
 GROUP BY country;
 ```
 
-Result: [paste your result or a short table here]
+*Results and business insights will be added after completing the analysis.*
 
-Takeaway: [one sentence, e.g. "Approval rate is lowest in PL, mostly because of insufficient_funds declines"]
+## Topics Covered
 
-## Topics covered
+- Filtering: WHERE, AND/OR, IN, BETWEEN
+- Aggregation: COUNT, SUM, AVG, GROUP BY, HAVING
+- Approval Rate with CASE WHEN
+- Payment performance analysis
 
-- [x] Filtering: WHERE, AND/OR, IN, BETWEEN
-- [x] Aggregation: COUNT, SUM, AVG, GROUP BY, HAVING
-- [x] Approval rate with CASE WHEN
-- [ ] JOIN (INNER, LEFT)
-- [ ] CTE and window functions
+## Next Steps
 
-## Next steps
-
-- Add JOIN, CTE and window function queries
-- Repeat the analysis in Python (pandas)
+- Complete JOIN analysis (INNER JOIN, LEFT JOIN)
+- Practice CTEs and window functions
+- Analyze payment trends over time
+- Reproduce the analysis using Python (pandas)
 - Build a dashboard in Tableau Public
 
 ## About
 
-Junior analyst in training, interested in payments analytics. Feedback is welcome.
+Junior analyst in training, interested in payment analytics. Feedback is welcome.
